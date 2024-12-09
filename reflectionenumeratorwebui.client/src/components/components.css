@@ -1,0 +1,49 @@
+.file-section-container {
+    display: flex; /* Horizontal layout for child elements */
+    justify-content: center; /* Center the items horizontally */
+    align-items: center; /* Center the items vertically */
+    width: 100%; /* Ensure the container takes up full width */
+}
+
+.file-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 250px;
+    height: 20px;
+    border: 2px dashed #aaa;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer; /* Change cursor to indicate the user can click */
+}
+
+.file-picker:hover {
+    border-color: #4CAF50; /* Change border color when hovered */
+}
+
+.file-input-box {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    color: #333;
+}
+
+.select-file-label {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    margin-right: 10px;
+    color: #333;
+}
+
+.selected-file-label {
+    margin: 0;
+}
+
+input[type="file"] {
+    display: none; /* Hide the default input */
+}
