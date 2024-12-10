@@ -44,6 +44,28 @@
     margin: 0;
 }
 
+.enumerate-button {
+    background-color: #4682B4;
+    color: #fff; /* White text for contrast */
+    border: 2px solid #4682B4; /* Match initial background color */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+    .enumerate-button:hover {
+        background-color: #1E90FF;
+        border-color: #5A9BD4;
+    }
+
+    .enumerate-button:disabled {
+        background-color: #d3d3d3; /* Light gray for disabled state */
+        border: 2px solid #d3d3d3;
+        cursor: not-allowed; /* Change cursor to indicate non-clickable */
+        color: #7f7f7f; /* Dim text color */
+    }
+
 input[type="file"] {
     display: none; /* Hide the default input */
 }

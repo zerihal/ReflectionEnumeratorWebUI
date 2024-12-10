@@ -48,6 +48,9 @@ export const FileSection = () => {
                     </p>
                 </div>
             </div>
+            <button className="enumerate-button" disabled={!selectedFile}>
+                Enumerate assembly
+            </button>
         </div>
     );
 };
