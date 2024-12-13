@@ -10,6 +10,7 @@ namespace ReflectionEnumeratorWebUI.Server.Controllers
     [Route("[controller]")]
     public class ReflectorEnumeratorController : ControllerBase
     {
+        // ToDo: Other than logger, should these be static objects here or should they be passed in?
         private static IReflectorSettings _settings = new ReflectorSettings(ReflectorModifiers.All);
         private static Interrogator _interrogator = new Interrogator(_settings);
         private readonly ILogger<ReflectorEnumeratorController> _logger;
@@ -47,7 +48,7 @@ namespace ReflectionEnumeratorWebUI.Server.Controllers
 
                 // Reflect the assembly
                 // ToDo ...
-                var interrogatedAssembly = _interrogator.InterrogateAssembly("");
+                var interrogatedAssembly = _interrogator.InterrogateAssembly(assembly);
             }
             catch (BadImageFormatException ex)
             {

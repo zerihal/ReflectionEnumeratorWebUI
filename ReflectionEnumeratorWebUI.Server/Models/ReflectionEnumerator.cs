@@ -2,6 +2,7 @@
 
 namespace ReflectionEnumeratorWebUI.Server.Models
 {
+    // ToDo: Maybe delete this?
     public class ReflectionEnumerator
     {
         /// <summary>
