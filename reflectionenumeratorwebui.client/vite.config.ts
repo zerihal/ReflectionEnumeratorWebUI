@@ -50,6 +50,10 @@ export default defineConfig({
             '^/weatherforecast': {
                 target,
                 secure: false
+            },
+            '^/reflectorenumerator': {
+                target,
+                secure: false
             }
         },
         port: 63594,

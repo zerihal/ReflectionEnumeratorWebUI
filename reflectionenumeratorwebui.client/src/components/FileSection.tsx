@@ -26,6 +26,46 @@ export const FileSection = () => {
         }
     };
 
+    // Handle file upload
+    const handleFileUpload = async () => {
+        if (!selectedFile) {
+            alert("Please select a file before uploading.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+
+        try {
+            const response = await fetch("reflectorenumerator/reflect-assembly", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                alert(`Upload successful: ${result.message}`);
+            } else {
+                const error = await response.text();
+                alert(`Upload failed: ${error}`);
+            }
+        } catch (error) {
+            console.error("Error uploading file:", error);
+            alert("An error occurred during upload.");
+        }
+    };
+
+    //const handleTest = async () => {
+    //    const response = await fetch('reflectorenumerator/test');
+    //    if (response.ok) {
+    //        const result = await response.json();
+    //        console.log(result);
+    //        alert(`${result.message}`);
+    //    } else {
+    //        alert("Error");
+    //    }
+    //}
+
     return (
         <div className="file-section-container">
             {/* ToDo Style for the label */}
@@ -48,7 +88,7 @@ export const FileSection = () => {
                     </p>
                 </div>
             </div>
-            <button className="enumerate-button" disabled={!selectedFile}>
+            <button className="enumerate-button" onClick={handleFileUpload} disabled={!selectedFile}>
                 Enumerate assembly
             </button>
         </div>
