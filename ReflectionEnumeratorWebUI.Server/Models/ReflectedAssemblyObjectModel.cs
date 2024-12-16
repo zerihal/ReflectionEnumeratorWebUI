@@ -64,5 +64,7 @@ namespace ReflectionEnumeratorWebUI.Server.Models
 
             return null;
         }
+
+        public override string ToString() => Name;
     }
 }

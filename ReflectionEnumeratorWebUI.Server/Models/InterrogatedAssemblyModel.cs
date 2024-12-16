@@ -21,7 +21,12 @@ namespace ReflectionEnumeratorWebUI.Server.Models
             {
                 if (assemblyObject.IsReflected)
                     AssemblyObjects.Add(new ReflectedAssemblyObjectModel(assemblyObject));
+
+                // ToDo - If assembly object is not reflected and there is an error with HasEntryPoint as true,
+                // we may still be able to get the info, however this should be placed into a try catch ...
             }
         }
+
+        public override string ToString() => $"{Name} (Version: {Version})";
     }
 }

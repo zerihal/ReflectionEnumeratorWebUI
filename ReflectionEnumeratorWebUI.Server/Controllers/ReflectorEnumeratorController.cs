@@ -2,6 +2,7 @@
 using ReflectionEnumerator;
 using ReflectionEnumerator.Interfaces;
 using ReflectionEnumerator.Settings;
+using ReflectionEnumeratorWebUI.Server.Models;
 using System.Reflection;
 
 namespace ReflectionEnumeratorWebUI.Server.Controllers
@@ -46,9 +47,21 @@ namespace ReflectionEnumeratorWebUI.Server.Controllers
                 // Load the assembly
                 Assembly assembly = Assembly.Load(assemblyBytes);
 
-                // Reflect the assembly
-                // ToDo ...
+                // Reflect and enumerate the assembly
                 var interrogatedAssembly = _interrogator.InterrogateAssembly(assembly);
+
+                if (interrogatedAssembly != null)
+                {
+                    // Populate assembly objects
+                    await interrogatedAssembly.GetAssemblyObjectElementsAsync();
+
+                    if (interrogatedAssembly.AssemblyObjects.Any())
+                    {
+                        // Create models for the reflected assembly and return the root object
+                        var interrogatedAssemblyModel = new InterrogatedAssemblyModel(interrogatedAssembly);
+                        //return Ok(interrogatedAssemblyModel); -- Need to update the TS file for this to store the object
+                    }
+                }
             }
             catch (BadImageFormatException ex)
             {
