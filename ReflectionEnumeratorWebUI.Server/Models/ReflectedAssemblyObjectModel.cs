@@ -12,6 +12,9 @@ namespace ReflectionEnumeratorWebUI.Server.Models
 
         public string AccessModifier { get; }
 
+        // ToDo: May be worth considering having the below as collections of the models that
+        // could be interpretted? Otherwise may need to store the reflected assembly server side
+        // as cannot store the raw object as JSON ... this needs some consideration!
         public string[] Properties { get; }
 
         public string[] Methods { get; }
