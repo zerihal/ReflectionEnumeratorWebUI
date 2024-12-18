@@ -10,10 +10,10 @@ export interface ReflectedAssemblyObject {
     objectType: ObjectType;
     name: string;
     accessModifier: string;
-    properties: string[];
-    methods: string[];
-    fields: string[];
-    events: string[];
+    properties: ReflectedProperty[];
+    methods: ReflectedMethod[];
+    fields: ReflectedField[];
+    events: ReflectedEvent[];
 }
 
 export interface ReflectedElementBase {
