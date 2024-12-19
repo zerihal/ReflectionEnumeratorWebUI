@@ -4,8 +4,6 @@ namespace ReflectionEnumeratorWebUI.Server.Models
 {
     public class ReflectedAssemblyObjectModel
     {
-        private IAssemblyObject _reflectedAssembly;
-
         public ObjectType AssemblyObjectType { get; }
 
         public string Name { get; }
@@ -22,10 +20,9 @@ namespace ReflectionEnumeratorWebUI.Server.Models
 
         public ReflectedAssemblyObjectModel(IAssemblyObject reflectedAssemblyObject)
         {
-            _reflectedAssembly = reflectedAssemblyObject;
-            Name = _reflectedAssembly.Name;
-            AssemblyObjectType = (ObjectType)_reflectedAssembly.ObjectType;
-            AccessModifier = _reflectedAssembly.AccessModifer;
+            Name = reflectedAssemblyObject.Name;
+            AssemblyObjectType = (ObjectType)reflectedAssemblyObject.ObjectType;
+            AccessModifier = reflectedAssemblyObject.AccessModifer;
 
             Properties = new List<ReflectedPropertyModel>();
             Methods = new List<ReflectedMethodModel>();

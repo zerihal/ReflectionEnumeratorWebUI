@@ -1,38 +1,38 @@
 import { ObjectType, ElementType } from '../enums/ReflectionEnums';
 
-export interface InterrogatedAssembly {
+export interface interrogatedAssembly {
     name: string;
     version: string;
-    assemblyObjects: ReflectedAssemblyObject[];
+    assemblyObjects: reflectedAssemblyObject[];
 }
 
-export interface ReflectedAssemblyObject {
+export interface reflectedAssemblyObject {
     objectType: ObjectType;
     name: string;
     accessModifier: string;
-    properties: ReflectedProperty[];
-    methods: ReflectedMethod[];
-    fields: ReflectedField[];
-    events: ReflectedEvent[];
+    properties: reflectedProperty[];
+    methods: reflectedMethod[];
+    fields: reflectedField[];
+    events: reflectedEvent[];
 }
 
-export interface ReflectedElementBase {
+export interface reflectedElementBase {
     elementType: ElementType;
     name: string;
     isPublic: boolean;
 }
 
-export interface ReflectedProperty extends ReflectedElementBase {
+export interface reflectedProperty extends reflectedElementBase {
     propertyType: string;
     access: string;
 }
 
-export interface ReflectedMethod extends ReflectedElementBase {
+export interface reflectedMethod extends reflectedElementBase {
     args: string[];
     returnType: string;
 }
 
-export interface ReflectedField extends ReflectedElementBase {
+export interface reflectedField extends reflectedElementBase {
     fieldType: string;
 }
 
@@ -40,6 +40,6 @@ export interface ReflectedField extends ReflectedElementBase {
 // so technically the base interface could be used, but have added this anyway for 
 // clarity and in case the model is updated in future.
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ReflectedEvent extends ReflectedElementBase {
+export interface reflectedEvent extends reflectedElementBase {
 
 }

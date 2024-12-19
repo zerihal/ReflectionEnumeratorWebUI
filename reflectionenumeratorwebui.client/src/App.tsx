@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useState } from "react"
 import { Header } from "./components/Header";
 import { FileSection } from "./components/FileSection";
-import { RefelctedAssemblySection } from "./components/RefectedAssemblySection";
+import { ReflectedAssemblySection } from "./components/ReflectedAssemblySection";
+import { interrogatedAssembly } from "./interfaces/ReflectionModels";
 import './App.css';
 
 // ToDo - Replace the default / sample code below with the following:
@@ -11,12 +12,18 @@ import './App.css';
 // Replace the output to show a tree structure for the reflected assembly with a view pane
 // Optional - ability to execute assembly methods
 
-const App = () => {
+const App: React.FC = () => {
+    const [assemblyData, setAssemblyData] = useState<interrogatedAssembly | null>(null);
+
+    const updateAssemblyData = (data: interrogatedAssembly) => {
+        setAssemblyData(data);
+    }
+
     return (
         <div>
             <Header />
-            <FileSection />
-            <RefelctedAssemblySection />
+            <FileSection updateAssemblyData={updateAssemblyData} />
+            <ReflectedAssemblySection data ={assemblyData} />
         </div>
     );
 };

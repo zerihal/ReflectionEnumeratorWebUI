@@ -47,6 +47,8 @@ namespace ReflectionEnumeratorWebUI.Server.Controllers
                 // Load the assembly
                 Assembly assembly = Assembly.Load(assemblyBytes);
 
+                Console.WriteLine($"Processing assembly: {assembly.GetName().Name}");
+
                 // Reflect and enumerate the assembly
                 var interrogatedAssembly = _interrogator.InterrogateAssembly(assembly);
 
@@ -59,7 +61,8 @@ namespace ReflectionEnumeratorWebUI.Server.Controllers
                     {
                         // Create models for the reflected assembly and return the root object
                         var interrogatedAssemblyModel = new InterrogatedAssemblyModel(interrogatedAssembly);
-                        //return Ok(interrogatedAssemblyModel); -- Need to update the TS file for this to store the object
+                        return Ok(interrogatedAssemblyModel);
+                        //return Ok(new { message = interrogatedAssemblyModel.Name });
                     }
                 }
             }
@@ -72,7 +75,7 @@ namespace ReflectionEnumeratorWebUI.Server.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
 
-            return Ok(new { Message = "Assembly loaded" });
+            return StatusCode(400, "No data");
         }
     }
 }
