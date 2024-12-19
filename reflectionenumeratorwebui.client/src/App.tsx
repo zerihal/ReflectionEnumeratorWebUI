@@ -20,10 +20,10 @@ const App: React.FC = () => {
     }
 
     return (
-        <div>
+        <div className="parent-container">
             <Header />
             <FileSection updateAssemblyData={updateAssemblyData} />
-            <ReflectedAssemblySection data ={assemblyData} />
+            <ReflectedAssemblySection data={assemblyData} />
         </div>
     );
 };

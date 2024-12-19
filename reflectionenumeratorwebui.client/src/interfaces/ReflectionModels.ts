@@ -7,7 +7,7 @@ export interface InterrogatedAssembly {
 }
 
 export interface ReflectedAssemblyObject {
-    objectType: ObjectType;
+    assemblyObjectType: ObjectType;
     name: string;
     accessModifier: string;
     properties: ReflectedProperty[];
