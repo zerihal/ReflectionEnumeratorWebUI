@@ -2,7 +2,7 @@ import React from "react";
 import * as Interfaces from '../interfaces/ReflectionModels';
 
 interface interrogatedAssemblyProps {
-    data: Interfaces.interrogatedAssembly | null;
+    data: Interfaces.InterrogatedAssembly | null;
 }
 
 export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ data }) => {

@@ -3,7 +3,7 @@ import * as Interfaces from '../interfaces/ReflectionModels';
 import "./components.css"
 
 interface FileSectionProps {
-    updateAssemblyData: (data: Interfaces.interrogatedAssembly) => void;
+    updateAssemblyData: (data: Interfaces.InterrogatedAssembly) => void;
 }
 
 export const FileSection: React.FC<FileSectionProps> = ({ updateAssemblyData }) => {
