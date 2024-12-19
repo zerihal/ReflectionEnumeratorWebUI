@@ -15,7 +15,3 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
 };
 
 export default ReflectedAssemblySection;
-
-//export const RefelctedAssemblySection = () => {
-//    return <main><p>Placeholder for reflected assembly results.</p></main>;
-//};

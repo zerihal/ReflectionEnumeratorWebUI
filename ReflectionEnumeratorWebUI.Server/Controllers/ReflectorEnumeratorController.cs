@@ -62,7 +62,6 @@ namespace ReflectionEnumeratorWebUI.Server.Controllers
                         // Create models for the reflected assembly and return the root object
                         var interrogatedAssemblyModel = new InterrogatedAssemblyModel(interrogatedAssembly);
                         return Ok(interrogatedAssemblyModel);
-                        //return Ok(new { message = interrogatedAssemblyModel.Name });
                     }
                 }
             }

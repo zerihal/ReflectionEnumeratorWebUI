@@ -1,6 +1,5 @@
 import { useState, useRef } from "react"; // Import React and the `useState` hook for managing component state.
 import * as Interfaces from '../interfaces/ReflectionModels';
-//import { ReflectedAssemblySection } from './ReflectedAssemblySection';
 import "./components.css"
 
 interface FileSectionProps {
@@ -11,7 +10,6 @@ export const FileSection: React.FC<FileSectionProps> = ({ updateAssemblyData }) 
     // State to hold the selected file.
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null); // Ref to access the file input element.
-    //const [interrogatedAssembly, setInterrogatedAssembly] = useState<Interfaces.interrogatedAssembly | null>(null);
 
     // Function to handle file input changes (when a user selects a file).
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,12 +49,11 @@ export const FileSection: React.FC<FileSectionProps> = ({ updateAssemblyData }) 
             });
 
             if (response.ok) {
-                //const result = await response.json();
-                //alert(`Upload successful: ${result.message}`);
+                // Response is OK so get JSON data and then call the updateAssemblyData method defined in the interface
+                // for this component to pass it back to App.tsx, where it will then be passed to the reflected assembly
+                // section component to display the data.
                 const data = await response.json();
-                //setInterrogatedAssembly(data);
                 updateAssemblyData(data);
-                //alert("Done!");
             } else {
                 const error = await response.text();
                 alert(`Upload failed: ${error}`);
@@ -66,17 +63,6 @@ export const FileSection: React.FC<FileSectionProps> = ({ updateAssemblyData }) 
             alert("An error occurred during upload.");
         }
     };
-
-    //const handleTest = async () => {
-    //    const response = await fetch('reflectorenumerator/test');
-    //    if (response.ok) {
-    //        const result = await response.json();
-    //        console.log(result);
-    //        alert(`${result.message}`);
-    //    } else {
-    //        alert("Error");
-    //    }
-    //}
 
     return (
         <div className="file-section-container">
@@ -103,21 +89,6 @@ export const FileSection: React.FC<FileSectionProps> = ({ updateAssemblyData }) 
             <button className="enumerate-button" onClick={handleFileUpload} disabled={!selectedFile}>
                 Enumerate assembly
             </button>
-            {/* The following is just to test when an assembly object has been uploaded (to be removed) */}
-            {/*<div>*/}
-            {/*    {interrogatedAssembly != null ? (*/}
-            {/*        <p>Current Assembly: {interrogatedAssembly.name}</p>*/}
-            {/*    ) : (*/}
-            {/*        <p>Current Assembly: None</p>*/}
-            {/*    )}*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    {interrogatedAssembly ? (*/}
-            {/*        <ReflectedAssemblySection data={interrogatedAssembly} />*/}
-            {/*    ) : (*/}
-            {/*        <p></p>*/}
-            {/*    )}*/}
-            {/*</div>*/}
         </div>
     );
 };
