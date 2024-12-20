@@ -21,8 +21,10 @@ const App: React.FC = () => {
 
     return (
         <div className="parent-container">
-            <Header />
-            <FileSection updateAssemblyData={updateAssemblyData} />
+            <div className="top-sticky-container">
+                <Header />
+                <FileSection updateAssemblyData={updateAssemblyData} />
+            </div>
             <ReflectedAssemblySection data={assemblyData} />
         </div>
     );

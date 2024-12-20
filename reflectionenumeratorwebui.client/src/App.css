@@ -1,8 +1,7 @@
 ﻿#root {
-    max-width: 1280px;
     margin: 0 auto;
-    padding: 2rem;
     text-align: center;
+    width: 100%;
 }
 
 th, td {
@@ -11,12 +10,19 @@ th, td {
 }
 
 html, body {
-    height: 100%;
     margin: 0;
+    padding: 0;
 }
 
 .parent-container {
     display: flex;
     flex-direction: column;
     height: 100%;
+}
+
+.top-sticky-container {
+    position: sticky;
+    top: 0;
+    z-Index: 1000;
+    background-Color: white;
 }

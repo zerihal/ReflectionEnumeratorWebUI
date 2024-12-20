@@ -1,6 +1,7 @@
 ﻿import React from "react";
 import * as Interfaces from '../interfaces/ReflectionModels';
 import { ObjectType } from '../enums/ReflectionEnums';
+import "./components.css"
 
 interface interrogatedAssemblyProps {
     data: Interfaces.InterrogatedAssembly | null;
@@ -12,17 +13,14 @@ const TreeNode: React.FC<{ name: string, children: Interfaces.ReflectedAssemblyO
     const [isExpanded, setIsExpanded] = React.useState(false);
 
     return (
-        <div style={{ margin: "0px 20px" }}>
-            <div
-                onClick={() => setIsExpanded(!isExpanded)}
-                style={{ cursor: "pointer", fontWeight: "bold", textAlign: "left" }}
-            >
-                {isExpanded ? "▼ " : "▶ "} {name}
+        <div className="tree-content">
+            <div className="tree-expandable-item" onClick={() => setIsExpanded(!isExpanded)}>
+                {isExpanded ? "▼ " : "▶ "} {pluraliseName(name)}
             </div>
             {isExpanded && (
-                <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                <ul className="tree-list">
                     {children.map((child, index) => (
-                        <li key={index} style={{ marginLeft: "20px", textAlign: "left" }}>
+                        <li className="tree-item tree-indentation" key={index}>
                             {child.name}
                         </li>
                     ))}
@@ -37,18 +35,19 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
     const groupedData = groupByType(data?.assemblyObjects);
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
+        <div className="assembly-section content-container">
             <div>
-                <h3 style={{ borderStyle: "solid", margin: "0px" }}>{data?.name}</h3>
+                <h3 className="box-section">{data?.name}</h3>
             </div>
-            <div style={{ display: "flex", flexDirection: "row", flexGrow: 1 }}>
-                <div style={{ borderStyle: "none solid solid solid", flexShrink: 0, width: "auto", overflowX: "auto" }}>
+            <div className="box-section assembly-detail-section">
+                <div className="tree-container">
                     {/* Tree - This needs some styling! */}
+                    <p className="tree-indentation tree-header">Components</p>
                     {Object.entries(groupedData).map(([type, items]) => (
                         <TreeNode key={type} name={type} children={items} />
                     ))}
                 </div>
-                <div style={{ borderStyle: "none solid solid none", flexGrow: 1 }}>
+                <div style={{ flexGrow: 1 }}>
                     <p>Test</p>
                     {/* Add reflection properties, methods, etc here */}
                 </div>
@@ -74,4 +73,9 @@ const groupByType = (data: Interfaces.ReflectedAssemblyObject[] | undefined) => 
     });
 
     return grouped;
+};
+
+// Append string with "s" or "es"
+const pluraliseName = (name: string): string => {
+    return name.endsWith("s") ? `${name}es` : `${name}s`;
 };

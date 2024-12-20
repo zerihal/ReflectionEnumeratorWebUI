@@ -18,9 +18,9 @@
     cursor: pointer; /* Change cursor to indicate the user can click */
 }
 
-.file-picker:hover {
-    border-color: #4CAF50; /* Change border color when hovered */
-}
+    .file-picker:hover {
+        border-color: #4CAF50; /* Change border color when hovered */
+    }
 
 .file-input-box {
     width: 100%;
@@ -69,3 +69,96 @@
 input[type="file"] {
     display: none; /* Hide the default input */
 }
+
+.content-container {
+    padding: 2rem;
+}
+
+.assembly-section {
+    display: flex;
+    flex-Direction: column;
+    flex-Grow: 1;
+}
+
+.assembly-detail-section {
+    display: flex;
+    flex-Direction: row;
+    flex-Grow: 1;
+}
+
+/* This currently just has a fixed border to the right, but may change on this to either fix the width or make it draggable (perhaps not for mobile though) */
+.tree-container {
+    border-Right: solid;
+    flex-Shrink: 0; 
+    width: auto;
+    overflow-X: auto;
+}
+
+.tree-content {
+    margin: 0px 20px;
+}
+
+.tree-indentation {
+    margin-left: 20px;
+}
+
+.tree-item {
+    text-align: left;
+    cursor: pointer;
+}
+
+    .tree-item:hover {
+        color: blue;
+    }
+
+.tree-header {
+    font-weight: bold;
+    text-align: left;
+}
+
+.tree-expandable-item {
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+}
+
+.tree-list {
+    list-Style: none;
+    margin: 0; 
+    padding: 0;
+}
+
+.box-section {
+    box-Shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
+    border-Radius: 4px; 
+    margin: 5px;
+}
+
+@media (max-width: 600px) {
+    .content-container {
+        padding: 0.75rem;
+    }
+
+    .tree-content {
+        margin: 0px 5px;
+    }
+
+    .tree-indentation {
+        margin-left: 5px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        padding: 1rem;
+    }
+
+    .tree-content {
+        margin: 0px 10px;
+    }
+
+    .tree-indentation {
+        margin-left: 10px;
+    }
+}
+
