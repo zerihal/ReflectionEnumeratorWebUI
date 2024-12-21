@@ -36,8 +36,9 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
 
     return (
         <div className="assembly-section content-container">
-            <div>
+            <div className="assembly-summary-section">
                 <h3 className="box-section">{data?.name}</h3>
+                {/* ToDo - This should show basic assembly info - name, version, and number of reflected objects, so size should be pretty static for this */}
             </div>
             <div className="box-section assembly-detail-section">
                 <div className="tree-container">
@@ -47,7 +48,8 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
                         <TreeNode key={type} name={type} children={items} />
                     ))}
                 </div>
-                <div style={{ flexGrow: 1 }}>
+                {/* ToDo: Need to fix this div to remain in view if scrolled, or maybe even consider doing something different with vertical expansion */}
+                <div style={{ flexGrow: 1, overflow: "auto" }}>
                     <p>Test</p>
                     {/* Add reflection properties, methods, etc here */}
                 </div>

@@ -80,18 +80,24 @@ input[type="file"] {
     flex-Grow: 1;
 }
 
+.assembly-summary-section {
+    /*max-height: 10vh;*/
+}
+
 .assembly-detail-section {
     display: flex;
     flex-Direction: row;
     flex-Grow: 1;
+    overflow: hidden;
+    /* This will need some adjustment (to vh value) once other elements have been completed - title bar will be made smaller and summary section a bit bigger */
+    max-height: calc(70vh - 1rem);
 }
 
-/* This currently just has a fixed border to the right, but may change on this to either fix the width or make it draggable (perhaps not for mobile though) */
 .tree-container {
     border-Right: solid;
-    flex-Shrink: 0; 
+    flex-Shrink: 0;
     width: auto;
-    overflow-X: auto;
+    overflow: auto;
 }
 
 .tree-content {

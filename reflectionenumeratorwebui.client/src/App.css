@@ -4,10 +4,10 @@
     width: 100%;
 }
 
-th, td {
+/*th, td {
     padding-left: 1rem;
     padding-right: 1rem;
-}
+}*/
 
 html, body {
     margin: 0;
@@ -18,11 +18,10 @@ html, body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    flex-shrink: 0;
 }
 
-.top-sticky-container {
-    position: sticky;
-    top: 0;
-    z-Index: 1000;
-    background-Color: white;
-}
+/*.top-container {
+    max-height: 20vh;
+    flex-shrink: 0;
+}*/

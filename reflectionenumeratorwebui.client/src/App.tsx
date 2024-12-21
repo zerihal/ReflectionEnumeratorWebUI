@@ -13,6 +13,7 @@ import './App.css';
 // Optional - ability to execute assembly methods
 
 const App: React.FC = () => {
+
     const [assemblyData, setAssemblyData] = useState<InterrogatedAssembly | null>(null);
 
     const updateAssemblyData = (data: InterrogatedAssembly) => {
@@ -21,11 +22,13 @@ const App: React.FC = () => {
 
     return (
         <div className="parent-container">
-            <div className="top-sticky-container">
-                <Header />
-                <FileSection updateAssemblyData={updateAssemblyData} />
-            </div>
-            <ReflectedAssemblySection data={assemblyData} />
+            {/*<div className="top-container">*/}
+            {/*    <Header />*/}
+            {/*    <FileSection updateAssemblyData={updateAssemblyData} />*/}
+            {/*</div>*/}
+            <Header />
+            <FileSection updateAssemblyData={updateAssemblyData} />
+            <ReflectedAssemblySection data={assemblyData} />        
         </div>
     );
 };
