@@ -122,15 +122,30 @@ input[type="file"] {
     text-align: left;
 }
 
-.tree-expandable-item {
+.expandable-item {
     font-weight: bold;
     text-align: left;
     cursor: pointer;
 }
 
+.expandable-item-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+    .expandable-item-box:hover {
+        color: blue;
+    }
+
 .tree-list {
     list-Style: none;
-    margin: 0; 
+    margin: 0;
     padding: 0;
 }
 
@@ -138,6 +153,39 @@ input[type="file"] {
     box-Shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
     border-Radius: 4px; 
     margin: 5px;
+}
+
+.element-list {
+    list-Style: none;
+    margin: 5px;
+    padding: 0;
+}
+
+.reflected-element {
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: steelblue;
+    display: flex;
+    flex-direction: column;
+    flex-grow: inherit;
+    overflow: hidden;
+    text-align: left;
+    margin-bottom: 3px;
+    padding: 0px 3px;
+}
+
+.reflected-element-header {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding: 2px 0px;
+}
+
+.reflected-element-detail {
+    border-top: solid;
+    border-block-color: steelblue;
+    border-width: 1px;
 }
 
 @media (max-width: 600px) {
