@@ -7,6 +7,14 @@ interface interrogatedAssemblyProps {
     data: Interfaces.InterrogatedAssembly | null;
 }
 
+interface ReflectedElementListProps {
+    label: string;
+    elements: Interfaces.ReflectedElementBase[] | undefined;
+}
+
+// Creates a context to manage the selected assembly object and the setter function for it.
+// The context provides `selectedAssemblyObject`, which can be either a `ReflectedAssemblyObject` or `null`,
+// and `setSelectedAO`, a function to update the selected assembly object.
 const SelectionContext = React.createContext<{
     selectedAssemblyObject: Interfaces.ReflectedAssemblyObject | null;
     setSelectedAO: (item: Interfaces.ReflectedAssemblyObject) => void;
@@ -14,8 +22,6 @@ const SelectionContext = React.createContext<{
     selectedAssemblyObject: null,
     setSelectedAO: () => { },
 });
-
-// ToDo: Styles below are to be moved to a CSS file (i.e. component.css)
 
 const TreeNode: React.FC<{ name: string, children: Interfaces.ReflectedAssemblyObject[] }> = ({ name, children }) => {
     const [isExpanded, setIsExpanded] = React.useState(false);
@@ -57,19 +63,63 @@ const ReflectedElementNode: React.FC<{ reflectedElement: Interfaces.ReflectedEle
             {isExpanded && (
                 <div className="reflected-element-detail">
                     <ul className="element-list">
-                        <li>Public: {reflectedElement.isPublic ? "True" : "False"}</li>
+                        <li>Visibility: {reflectedElement.isPublic ? "Public" : "Non-public"}</li>
 
                         {/* ToDo: Add other element specific properties */}
 
                         {isReflectedField(reflectedElement) && (
                             <li>Field Type: {reflectedElement.fieldType}</li>
                         )}
+
+                        {isReflectedProperty(reflectedElement) && (
+                            <ul className="sub-element-list">
+                                <li>Property Type: {reflectedElement.propertyType}</li>
+                                <li>Access Level: {reflectedElement.access}</li>
+                            </ul>
+                        )}
+
+                        {isReflectedMethod(reflectedElement) && (
+                            <ul className="sub-element-list">
+                                <li>Return Type: {reflectedElement.returnType}</li>
+                                <li className="arguments-list">
+                                    <span>Arguments:</span>
+                                    <ul className="sub-element-list">
+                                        {reflectedElement.args?.length ? (
+                                            reflectedElement.args.map((arg, index) => (
+                                                <li key={index}>{arg}</li>
+                                            ))) : (
+                                                <li>None</li>
+                                            )
+                                        }
+                                    </ul>
+                                </li>
+                            </ul>
+                        )}
+
+                        {/* Placeholder for reflected event if additional properties added in future (at present just reflected element base) */}
                     </ul>
                 </div>
             )}
         </li>
     );
 }
+
+const ReflectedElementList: React.FC<ReflectedElementListProps> = ({ label, elements }) => {
+    return (
+        <div>
+            <h4>{label}</h4>
+            {elements?.length ? (
+                <ul className="element-list">
+                    {elements.map((element, index) => (
+                        <ReflectedElementNode key={index} reflectedElement={element} />
+                    ))}
+                </ul>
+            ) : (
+                <p>No {label.toLowerCase()} available</p>
+            )}
+        </div>
+    );
+};
 
 export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ data }) => {
     const groupedData = groupByType(data?.assemblyObjects);
@@ -98,20 +148,10 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
                         {selectedAssemblyObject ? <p>{selectedAssemblyObject.name}</p> : <p>No item selected</p>}
                         {/* The below is a sample of what we will do for all objects in reflected assembly object, but this needs some styling! */}
 
-                        <h4>Fields</h4>
-                        {fields?.length ? (
-                            <ul className="element-list">
-                                {fields.map((field) => (
-                                    <ReflectedElementNode reflectedElement={field}/>
-                                    //<li className="reflected-element" key={field.name}>
-                                    //    <div></div>
-                                    //    <div>{field.name}</div>
-                                    //</li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>No fields available</p>
-                        )}
+                        <ReflectedElementList label="Fields" elements={fields} />
+                        <ReflectedElementList label="Properties" elements={properties} />
+                        <ReflectedElementList label="Methods" elements={methods} />
+                        <ReflectedElementList label="Events" elements={events} />
                     </div>
                 </div>
             </div>
@@ -135,6 +175,11 @@ const groupByType = (data: Interfaces.ReflectedAssemblyObject[] | undefined) => 
         }
     });
 
+    // Sort each group alphabetically by name
+    Object.keys(grouped).forEach(type => {
+        grouped[type as ObjectType].sort((a, b) => a.name.localeCompare(b.name));
+    });
+
     return grouped;
 };
 
@@ -142,6 +187,17 @@ const groupByType = (data: Interfaces.ReflectedAssemblyObject[] | undefined) => 
 const pluraliseName = (name: string): string => {
     return name.endsWith("s") ? `${name}es` : `${name}s`;
 };
+
+//const sortByProperty = <T>(data: T[], key: keyof T): T[] => {
+//    return [...data].sort((a, b) => {
+//        const aValue = a[key];
+//    const bValue = b[key];
+//    if (typeof aValue === 'string' && typeof bValue === 'string') {
+//            return aValue.localeCompare(bValue);
+//        }
+//    return 0; // No sorting for non-string properties
+//    });
+//};
 
 // Checks whether reflected element is a field, casting to ReflectedField if so.
 const isReflectedField = (element: Interfaces.ReflectedElementBase): element is Interfaces.ReflectedField => {
@@ -159,6 +215,7 @@ const isReflectedMethod = (element: Interfaces.ReflectedElementBase): element is
 }
 
 // Checks whether reflected element is a event, casting to ReflectedEvent if so.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isReflectedEvent = (element: Interfaces.ReflectedElementBase): element is Interfaces.ReflectedEvent => {
     return (element as Interfaces.ReflectedEvent).elementType == ElementType.Event;
 }

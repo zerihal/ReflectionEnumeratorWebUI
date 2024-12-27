@@ -155,10 +155,20 @@ input[type="file"] {
     margin: 5px;
 }
 
-.element-list {
+.element-list,
+.sub-element-list {
     list-Style: none;
-    margin: 5px;
     padding: 0;
+}
+
+.element-list {
+    margin: 5px;
+}
+
+.arguments-list {
+    display: grid;
+    grid-template-columns: 0fr 1fr; /* Two columns, one for the label, one for the arguments */
+    gap: 10px; /* Adjust the space between columns */
 }
 
 .reflected-element {
