@@ -167,7 +167,7 @@ input[type="file"] {
 
 .arguments-list {
     display: grid;
-    grid-template-columns: 0fr 1fr; /* Two columns, one for the label, one for the arguments */
+    grid-template-columns: auto 1fr; /* Label column autosized and args column takes up remaining space */
     gap: 10px; /* Adjust the space between columns */
 }
 
