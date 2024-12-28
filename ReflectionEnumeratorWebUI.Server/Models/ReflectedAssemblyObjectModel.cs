@@ -8,6 +8,8 @@ namespace ReflectionEnumeratorWebUI.Server.Models
 
         public string Name { get; }
 
+        public string Namespace { get; }
+
         public string AccessModifier { get; }
 
         public List<ReflectedPropertyModel> Properties { get; }
@@ -21,6 +23,7 @@ namespace ReflectionEnumeratorWebUI.Server.Models
         public ReflectedAssemblyObjectModel(IAssemblyObject reflectedAssemblyObject)
         {
             Name = reflectedAssemblyObject.Name;
+            Namespace = reflectedAssemblyObject.Namespace;
             AssemblyObjectType = (ObjectType)reflectedAssemblyObject.ObjectType;
             AccessModifier = reflectedAssemblyObject.AccessModifer;
 

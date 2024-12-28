@@ -9,6 +9,7 @@ export interface InterrogatedAssembly {
 export interface ReflectedAssemblyObject {
     assemblyObjectType: ObjectType;
     name: string;
+    namespace: string;
     accessModifier: string;
     properties: ReflectedProperty[];
     methods: ReflectedMethod[];

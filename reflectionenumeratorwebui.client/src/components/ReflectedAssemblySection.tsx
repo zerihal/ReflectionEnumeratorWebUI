@@ -145,8 +145,8 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
                     </div>
                     {/* ToDo: Need to fix this div to remain in view if scrolled, or maybe even consider doing something different with vertical expansion */}
                     <div style={{ flexGrow: 1, overflow: "auto" }}>
-                        {selectedAssemblyObject ? <p>{selectedAssemblyObject.name}</p> : <p>No item selected</p>}
-                        {/* The below is a sample of what we will do for all objects in reflected assembly object, but this needs some styling! */}
+                        {/* ToDo: This could do with being displayed better - maybe a sticky section with type, namespace, and access modifier? */}
+                        {selectedAssemblyObject ? <h4>{selectedAssemblyObject.name} ({selectedAssemblyObject.namespace})</h4> : <p>No item selected</p>}
 
                         <ReflectedElementList label="Fields" elements={fields} />
                         <ReflectedElementList label="Properties" elements={properties} />

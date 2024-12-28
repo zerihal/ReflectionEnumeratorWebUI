@@ -53,6 +53,7 @@ export const FileSection: React.FC<FileSectionProps> = ({ updateAssemblyData }) 
                 // for this component to pass it back to App.tsx, where it will then be passed to the reflected assembly
                 // section component to display the data.
                 const data = await response.json();
+
                 updateAssemblyData(data);
             } else {
                 const error = await response.text();
