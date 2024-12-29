@@ -4,24 +4,26 @@
     width: 100%;
 }
 
-/*th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
-}*/
-
 html, body {
     margin: 0;
     padding: 0;
 }
+
+body {
+    background-color: white;
+    color: black;
+}
+
+/* Apply scrollbar styles globally */
+/** {
+    scrollbar-color: #c0c0c0 #f0f0f0;*/ /* Thumb and track colors */
+    /*scrollbar-width: thin;
+}*/
 
 .parent-container {
     display: flex;
     flex-direction: column;
     height: 100%;
     flex-shrink: 0;
+    height: 100vh;
 }
-
-/*.top-container {
-    max-height: 20vh;
-    flex-shrink: 0;
-}*/

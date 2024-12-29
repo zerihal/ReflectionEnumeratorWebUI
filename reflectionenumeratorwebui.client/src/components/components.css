@@ -1,3 +1,10 @@
+.page-header {
+    background-image: linear-gradient(lightgray, white);
+    background-color: transparent;
+    text-align: center;
+    font-size: 0.75rem;
+}
+
 .file-section-container {
     display: flex; /* Horizontal layout for child elements */
     justify-content: center; /* Center the items horizontally */
@@ -105,8 +112,7 @@ input[type="file"] {
 }
 
 .assembly-detail-section {
-    /* This will need some adjustment (to vh value) once other elements have been completed - title bar will be made smaller and summary section a bit bigger */
-    max-height: calc(70vh - 1rem);
+    max-height: calc(70vh - 6rem);
 }
 
 .tree-container {
@@ -230,7 +236,7 @@ input[type="file"] {
 .reflected-object-title,
 .reflected-assembly-title {
     text-align: center;
-    text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .reflected-assembly-title {
