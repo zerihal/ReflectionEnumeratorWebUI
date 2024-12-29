@@ -83,7 +83,7 @@ export const FileSection: React.FC<FileSectionProps> = ({ updateAssemblyData }) 
                 />
                 <div className="file-input-box">
                     <p className="selected-file-label">
-                        {selectedFile ? `Selected File: ${selectedFile.name}` : "Select or drop file"}
+                        {selectedFile ? selectedFile.name : "Select or drop file"}
                     </p>
                 </div>
             </div>

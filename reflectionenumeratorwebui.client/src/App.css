@@ -14,12 +14,6 @@ body {
     color: black;
 }
 
-/* Apply scrollbar styles globally */
-/** {
-    scrollbar-color: #c0c0c0 #f0f0f0;*/ /* Thumb and track colors */
-    /*scrollbar-width: thin;
-}*/
-
 .parent-container {
     display: flex;
     flex-direction: column;

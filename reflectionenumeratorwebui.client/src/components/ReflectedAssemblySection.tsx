@@ -118,18 +118,6 @@ const ReflectedElementList: React.FC<ReflectedElementListProps> = ({ label, elem
     }
 
     return (
-        //<div>
-        //    <p className="reflected-element-title">{label}</p>
-        //    {elements?.length ? (
-        //        <ul className="element-list">
-        //            {elements.map((element, index) => (
-        //                <ReflectedElementNode key={index} reflectedElement={element} />
-        //            ))}
-        //        </ul>
-        //    ) : (
-        //        <p>No {label.toLowerCase()} available</p>
-        //    )}
-        //</div>
         <div>
             <p className="reflected-element-title">{label}</p>
             <ul className="element-list">
@@ -153,6 +141,10 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
     // Deconstruct the relevant properties from selectedAssemblyObject
     const { fields, properties, methods, events } = selectedAssemblyObject ?? {};
 
+    if (!data) {
+        return null;
+    }
+
     return (
         <SelectionContext.Provider value={{ selectedAssemblyObject, setSelectedAO }}>
             <div className="assembly-section content-container">
@@ -174,7 +166,6 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
                         ))}
                     </div>
                     <div style={{ flexGrow: 1, overflow: "auto" }}>
-                        {/* ToDo: This could do with being displayed better - maybe a sticky section with type, namespace, and access modifier? */}
                         {selectedAssemblyObject ? (
                             <div>
                                 <h3 className="reflected-object-title">{selectedAssemblyObject.name}</h3>
