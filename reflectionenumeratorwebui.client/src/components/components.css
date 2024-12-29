@@ -82,17 +82,29 @@ input[type="file"] {
     display: flex;
     flex-Direction: column;
     flex-Grow: 1;
+    font-size: 15px;
 }
 
-.assembly-summary-section {
-    /*max-height: 10vh;*/
-}
-
+.assembly-summary-section,
 .assembly-detail-section {
     display: flex;
     flex-Direction: row;
     flex-Grow: 1;
     overflow: hidden;
+}
+
+.assembly-summary-section {
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.assembly-summary-section p {
+    text-align: center;
+    font-weight: bold;
+    margin: 2px 15px;
+}
+
+.assembly-detail-section {
     /* This will need some adjustment (to vh value) once other elements have been completed - title bar will be made smaller and summary section a bit bigger */
     max-height: calc(70vh - 1rem);
 }
@@ -100,12 +112,13 @@ input[type="file"] {
 .tree-container {
     border-Right: solid;
     flex-Shrink: 0;
-    width: auto;
+    width: 15%;
     overflow: auto;
 }
 
 .tree-content {
     margin: 0px 20px;
+    font-size: 16px;
 }
 
 .tree-indentation {
@@ -124,6 +137,13 @@ input[type="file"] {
 .tree-header {
     font-weight: bold;
     text-align: left;
+    font-size: 16px;
+}
+
+.tree-header-div {
+    border-bottom: solid 1px;
+    width: 100%;
+    margin-bottom: 5px;
 }
 
 .expandable-item {
@@ -153,10 +173,15 @@ input[type="file"] {
     padding: 0;
 }
 
-.box-section {
+.box-section,
+.title-box-section {
     box-Shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
     border-Radius: 4px; 
     margin: 5px;
+}
+
+.title-box-section {
+    background-color: aliceblue;
 }
 
 .element-list,
@@ -201,6 +226,36 @@ input[type="file"] {
     border-block-color: steelblue;
     border-width: 1px;
 }
+
+.reflected-object-title,
+.reflected-assembly-title {
+    text-align: center;
+    text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.reflected-assembly-title {
+    margin: 5px;
+    padding-bottom: 5px;
+    font-size: 20px;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+.reflected-element-title {
+    font-size: inherit;
+    font-weight: bold;
+    color: midnightblue;
+}
+
+.assembly-object-info {
+    border: 1px solid steelblue;
+    border-radius: 4px;
+    margin: 0px 5px;
+}
+
+    .assembly-object-info p {
+        margin: 0px 5px;
+        text-align: left;
+    }
 
 @media (max-width: 600px) {
     .content-container {

@@ -25,7 +25,15 @@ const SelectionContext = React.createContext<{
 
 const TreeNode: React.FC<{ name: string, children: Interfaces.ReflectedAssemblyObject[] }> = ({ name, children }) => {
     const [isExpanded, setIsExpanded] = React.useState(false);
-    const { setSelectedAO } = React.useContext(SelectionContext)!;
+    const { setSelectedAO, selectedAssemblyObject } = React.useContext(SelectionContext)!;
+
+    // If selected assembly object is null (i.e. new assembly has been reflected), ensure that all tree nodes
+    // are reset to not be expanded.
+    React.useEffect(() => {
+        if (selectedAssemblyObject === null) {
+            setIsExpanded(false);
+        }
+    }, [selectedAssemblyObject])
 
     return (
         <div className="tree-content">
@@ -105,18 +113,30 @@ const ReflectedElementNode: React.FC<{ reflectedElement: Interfaces.ReflectedEle
 }
 
 const ReflectedElementList: React.FC<ReflectedElementListProps> = ({ label, elements }) => {
+    if (!elements?.length) {
+        return null;
+    }
+
     return (
+        //<div>
+        //    <p className="reflected-element-title">{label}</p>
+        //    {elements?.length ? (
+        //        <ul className="element-list">
+        //            {elements.map((element, index) => (
+        //                <ReflectedElementNode key={index} reflectedElement={element} />
+        //            ))}
+        //        </ul>
+        //    ) : (
+        //        <p>No {label.toLowerCase()} available</p>
+        //    )}
+        //</div>
         <div>
-            <h4>{label}</h4>
-            {elements?.length ? (
-                <ul className="element-list">
-                    {elements.map((element, index) => (
-                        <ReflectedElementNode key={index} reflectedElement={element} />
-                    ))}
-                </ul>
-            ) : (
-                <p>No {label.toLowerCase()} available</p>
-            )}
+            <p className="reflected-element-title">{label}</p>
+            <ul className="element-list">
+                {elements?.map((element, index) => (
+                    <ReflectedElementNode key={index} reflectedElement={element} />
+                ))}
+            </ul>
         </div>
     );
 };
@@ -125,33 +145,53 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
     const groupedData = groupByType(data?.assemblyObjects);
     const [selectedAssemblyObject, setSelectedAO] = React.useState<Interfaces.ReflectedAssemblyObject | null>(null);
 
+    // Reset the selected assembly object when data changes
+    React.useEffect(() => {
+        setSelectedAO(null);  // Reset selection when data changes
+    }, [data]);  // Trigger effect when `data` change
+
     // Deconstruct the relevant properties from selectedAssemblyObject
     const { fields, properties, methods, events } = selectedAssemblyObject ?? {};
 
     return (
         <SelectionContext.Provider value={{ selectedAssemblyObject, setSelectedAO }}>
             <div className="assembly-section content-container">
-                <div className="assembly-summary-section">
-                    <h3 className="box-section">{data?.name}</h3>
-                    {/* ToDo - This should show basic assembly info - name, version, and number of reflected objects, so size should be pretty static for this */}
+                <div className="title-box-section">
+                    <h3 className="reflected-assembly-title">{data?.name}</h3>
+                    <div className="assembly-summary-section">
+                        <p>Version: {data?.version}</p>
+                        <p>Enumerated Components: {data?.assemblyObjects.length}</p>
+                    </div>
                 </div>
                 <div className="box-section assembly-detail-section">
                     <div className="tree-container">
-                        {/* Tree - This needs some styling! */}
-                        <p className="tree-indentation tree-header">Components</p>
+                        <div className="tree-header-div">
+                            <p className="tree-indentation tree-header">Components</p>
+                        </div>
+                        
                         {Object.entries(groupedData).map(([type, items]) => (
                             <TreeNode key={type} name={type} children={items} />
                         ))}
                     </div>
-                    {/* ToDo: Need to fix this div to remain in view if scrolled, or maybe even consider doing something different with vertical expansion */}
                     <div style={{ flexGrow: 1, overflow: "auto" }}>
                         {/* ToDo: This could do with being displayed better - maybe a sticky section with type, namespace, and access modifier? */}
-                        {selectedAssemblyObject ? <h4>{selectedAssemblyObject.name} ({selectedAssemblyObject.namespace})</h4> : <p>No item selected</p>}
+                        {selectedAssemblyObject ? (
+                            <div>
+                                <h3 className="reflected-object-title">{selectedAssemblyObject.name}</h3>
+                                <div className="assembly-object-info">
+                                    <p><b>Type:</b> {selectedAssemblyObject.assemblyObjectType}</p>
+                                    <p><b>Namespace:</b> {selectedAssemblyObject.namespace}</p>
+                                    <p><b>Access Modifiers:</b> {selectedAssemblyObject.accessModifier}</p>
+                                </div>
 
-                        <ReflectedElementList label="Fields" elements={fields} />
-                        <ReflectedElementList label="Properties" elements={properties} />
-                        <ReflectedElementList label="Methods" elements={methods} />
-                        <ReflectedElementList label="Events" elements={events} />
+                                <ReflectedElementList label="Fields" elements={fields} />
+                                <ReflectedElementList label="Properties" elements={properties} />
+                                <ReflectedElementList label="Methods" elements={methods} />
+                                <ReflectedElementList label="Events" elements={events} />
+                            </div>
+                        ) : (
+                            <p>No item selected</p>
+                        )}
                     </div>
                 </div>
             </div>
@@ -187,6 +227,8 @@ const groupByType = (data: Interfaces.ReflectedAssemblyObject[] | undefined) => 
 const pluraliseName = (name: string): string => {
     return name.endsWith("s") ? `${name}es` : `${name}s`;
 };
+
+// Could it be better to do sorting from the API?
 
 //const sortByProperty = <T>(data: T[], key: keyof T): T[] => {
 //    return [...data].sort((a, b) => {
