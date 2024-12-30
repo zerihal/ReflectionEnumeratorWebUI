@@ -1,15 +1,17 @@
-import { useState, useRef } from "react"; // Import React and the `useState` hook for managing component state.
+import { useState, useRef } from "react";
 import * as Interfaces from '../interfaces/ReflectionModels';
 import "./components.css"
 
+// File section properties with method to update assembly data.
 interface FileSectionProps {
     updateAssemblyData: (data: Interfaces.InterrogatedAssembly) => void;
 }
 
+// File section export for selection and enumeration call for assembly file.
 export const FileSection: React.FC<FileSectionProps> = ({ updateAssemblyData }) => {
-    // State to hold the selected file.
+    // State and reference for selected file.
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const fileInputRef = useRef<HTMLInputElement | null>(null); // Ref to access the file input element.
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     // Function to handle file input changes (when a user selects a file).
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,10 +22,12 @@ export const FileSection: React.FC<FileSectionProps> = ({ updateAssemblyData }) 
         }
     };
 
+    // Drag over function (prevent default behaviour of opening file).
     const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-        event.preventDefault(); // Prevent the default behavior (e.g., opening the file).
+        event.preventDefault();
     };
 
+    // Drag drop function to set selected file.
     const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
         if (event.dataTransfer.files.length > 0) {
@@ -31,7 +35,7 @@ export const FileSection: React.FC<FileSectionProps> = ({ updateAssemblyData }) 
         }
     };
 
-    // Handle file upload
+    // Handle file upload.
     const handleFileUpload = async () => {
         if (!selectedFile) {
             alert("Please select a file before uploading.");
@@ -67,19 +71,18 @@ export const FileSection: React.FC<FileSectionProps> = ({ updateAssemblyData }) 
 
     return (
         <div className="file-section-container">
-            {/* ToDo Style for the label */}
             <p className="select-file-label">Selected File:</p>
             <div className="file-picker"
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
-                onClick={() => fileInputRef.current?.click()} // Trigger file selection on click
+                onClick={() => fileInputRef.current?.click()}
             >
                 <input
                     type="file"
                     accept=".dll"
                     onChange={handleFileChange}
                     ref={fileInputRef}
-                    style={{ display: "none" }} // Hide the default file input
+                    style={{ display: "none" }}
                 />
                 <div className="file-input-box">
                     <p className="selected-file-label">

@@ -3,10 +3,12 @@ import * as Interfaces from '../interfaces/ReflectionModels';
 import { ObjectType, ElementType } from '../enums/ReflectionEnums';
 import "./components.css"
 
+// Interrogated assembly props for reflected assembly data.
 interface interrogatedAssemblyProps {
     data: Interfaces.InterrogatedAssembly | null;
 }
 
+// Reflected element list props containing reflected elements within a selected class, interface, or enum.
 interface ReflectedElementListProps {
     label: string;
     elements: Interfaces.ReflectedElementBase[] | undefined;
@@ -23,6 +25,7 @@ const SelectionContext = React.createContext<{
     setSelectedAO: () => { },
 });
 
+// Tree node containing selectable assembly objects within category defined by name (e.g. class, interface, etc).
 const TreeNode: React.FC<{ name: string, children: Interfaces.ReflectedAssemblyObject[] }> = ({ name, children }) => {
     const [isExpanded, setIsExpanded] = React.useState(false);
     const { setSelectedAO, selectedAssemblyObject } = React.useContext(SelectionContext)!;
@@ -56,6 +59,7 @@ const TreeNode: React.FC<{ name: string, children: Interfaces.ReflectedAssemblyO
     );
 }
 
+// Reflected element node, such as a field, property, method, or event, which can be expanded to show further details.
 const ReflectedElementNode: React.FC<{ reflectedElement: Interfaces.ReflectedElementBase }> = ({ reflectedElement }) => {
     const [isExpanded, setIsExpanded] = React.useState(false);
 
@@ -72,8 +76,6 @@ const ReflectedElementNode: React.FC<{ reflectedElement: Interfaces.ReflectedEle
                 <div className="reflected-element-detail">
                     <ul className="element-list">
                         <li>Visibility: {reflectedElement.isPublic ? "Public" : "Non-public"}</li>
-
-                        {/* ToDo: Add other element specific properties */}
 
                         {isReflectedField(reflectedElement) && (
                             <li>Field Type: {reflectedElement.fieldType}</li>
@@ -112,6 +114,7 @@ const ReflectedElementNode: React.FC<{ reflectedElement: Interfaces.ReflectedEle
     );
 }
 
+// Reflected element list implementation.
 const ReflectedElementList: React.FC<ReflectedElementListProps> = ({ label, elements }) => {
     if (!elements?.length) {
         return null;
@@ -129,14 +132,16 @@ const ReflectedElementList: React.FC<ReflectedElementListProps> = ({ label, elem
     );
 };
 
+// Reflected assembly section export, containing all details of the reflected assembly with a summary section, a tree to select
+// classes, interfaces, or enums, and details section to navigate and expand the contained reflected elements.
 export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ data }) => {
     const groupedData = groupByType(data?.assemblyObjects);
     const [selectedAssemblyObject, setSelectedAO] = React.useState<Interfaces.ReflectedAssemblyObject | null>(null);
 
     // Reset the selected assembly object when data changes
     React.useEffect(() => {
-        setSelectedAO(null);  // Reset selection when data changes
-    }, [data]);  // Trigger effect when `data` change
+        setSelectedAO(null);
+    }, [data]);
 
     // Deconstruct the relevant properties from selectedAssemblyObject
     const { fields, properties, methods, events } = selectedAssemblyObject ?? {};
@@ -148,6 +153,7 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
     return (
         <SelectionContext.Provider value={{ selectedAssemblyObject, setSelectedAO }}>
             <div className="assembly-section content-container">
+                {/* Assembly summary box */}
                 <div className="title-box-section">
                     <h3 className="reflected-assembly-title">{data?.name}</h3>
                     <div className="assembly-summary-section">
@@ -155,7 +161,9 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
                         <p>Enumerated Components: {data?.assemblyObjects.length}</p>
                     </div>
                 </div>
+                {/* Assembly details box */}
                 <div className="box-section assembly-detail-section">
+                    {/* Assembly objects tree */}
                     <div className="tree-container">
                         <div className="tree-header-div">
                             <p className="tree-indentation tree-header">Components</p>
@@ -165,6 +173,7 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
                             <TreeNode key={type} name={type} children={items} />
                         ))}
                     </div>
+                    {/* Selected assembly object details section, containing all reflected elements and expandable details */}
                     <div style={{ flexGrow: 1, overflow: "auto" }}>
                         {selectedAssemblyObject ? (
                             <div>
@@ -192,7 +201,9 @@ export const ReflectedAssemblySection: React.FC<interrogatedAssemblyProps> = ({ 
 
 export default ReflectedAssemblySection;
 
-// Helpers
+// Helper Functions
+
+// Groups reflected assembly objects by type.
 const groupByType = (data: Interfaces.ReflectedAssemblyObject[] | undefined) => {
     const grouped: Record<ObjectType, Interfaces.ReflectedAssemblyObject[]> = {
         Class: [],
@@ -214,23 +225,10 @@ const groupByType = (data: Interfaces.ReflectedAssemblyObject[] | undefined) => 
     return grouped;
 };
 
-// Append string with "s" or "es"
+// Appends string with "s" or "es"
 const pluraliseName = (name: string): string => {
     return name.endsWith("s") ? `${name}es` : `${name}s`;
 };
-
-// Could it be better to do sorting from the API?
-
-//const sortByProperty = <T>(data: T[], key: keyof T): T[] => {
-//    return [...data].sort((a, b) => {
-//        const aValue = a[key];
-//    const bValue = b[key];
-//    if (typeof aValue === 'string' && typeof bValue === 'string') {
-//            return aValue.localeCompare(bValue);
-//        }
-//    return 0; // No sorting for non-string properties
-//    });
-//};
 
 // Checks whether reflected element is a field, casting to ReflectedField if so.
 const isReflectedField = (element: Interfaces.ReflectedElementBase): element is Interfaces.ReflectedField => {
