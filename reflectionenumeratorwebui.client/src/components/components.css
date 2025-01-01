@@ -112,7 +112,7 @@ input[type="file"] {
 }
 
 .assembly-detail-section {
-    max-height: calc(70vh - 6rem);
+    max-height: calc(70vh - 4rem);
 }
 
 .tree-container {
